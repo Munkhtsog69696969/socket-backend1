@@ -23,26 +23,25 @@ const io=new Server(server,{
     }
 });
 
-//
-
 // io.on means listening
 
 io.on("connection",(socket)=>{
-    // console.log("User id:",socket.id);
+    // console.log(socket.id)
 
-    socket.on("join-room",(data)=>{
-        console.log("clicked join room button")
-        socket.join(data.roomId)
+    socket.on("join_room",(data)=>{
+        console.log(data)
+
+        socket.join(data.room)
     })
 
-    socket.on("send-messages",(data)=>{
-        socket.to(data.roomId).emit("receive-messages",data)
+    socket.on("send_messages",(data)=>{
+
+        socket.to(data.room).emit("received_messages",data.messages);
     })
 
     socket.on("disconnect",()=>{
         console.log("User disconnected with id:",socket.id)
     })
-
 })
 
 server.listen(port,()=>{
