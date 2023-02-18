@@ -8,7 +8,7 @@ const http=require("http");
 
 const cors=require("cors");
 
-const port=process.env.PORT || 8090;
+const port=1234;
 
 app.use(cors());
 
@@ -23,7 +23,6 @@ const io=new Server(server,{
     }
 });
 
-// io.on means listening
 
 io.on("connection",(socket)=>{
     // console.log(socket.id)
@@ -35,8 +34,9 @@ io.on("connection",(socket)=>{
     })
 
     socket.on("send_messages",(data)=>{
+        console.log(data)
 
-        socket.to(data.room).emit("received_messages",data.messages);
+        socket.to(data.room).emit("received_messages",{message:data.message , name:data.name , imageUrl:data.imageUrl});
     })
 
     socket.on("disconnect",()=>{
